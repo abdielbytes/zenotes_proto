@@ -1,16 +1,17 @@
 <template>
-    <div class="bg-black min-h-screen text-white flex flex-col">
+    <div class="bg-black h-full text-white">
       <!-- Navigation Bar -->
       <nav class="bg-gray-900 p-4 flex justify-between items-center">
         <div class="text-xl font-bold">Zenotes</div>
-        <div v-if="canLogin" class="flex space-x-4">
+        <nav v-if="canLogin" class="-mx-3 flex flex-1 justify-end">
           <Link
-            v-if="isAuthenticated"
+            v-if="$page.props.auth.user"
             :href="route('dashboard')"
             class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
           >
             Dashboard
           </Link>
+  
           <template v-else>
             <Link
               :href="route('login')"
@@ -18,6 +19,7 @@
             >
               Log in
             </Link>
+  
             <Link
               v-if="canRegister"
               :href="route('register')"
@@ -26,7 +28,7 @@
               Register
             </Link>
           </template>
-        </div>
+        </nav>
       </nav>
   
       <!-- Header Section -->
@@ -36,7 +38,7 @@
       </header>
   
       <!-- Main Content -->
-      <div class="main-content flex-grow flex flex-col items-center text-center px-4 py-8">
+      <div class="main-content flex flex-col items-center text-center px-4 py-8">
         <!-- Features Container -->
         <div class="features-container flex flex-wrap justify-center">
           <!-- Feature Item -->
@@ -52,6 +54,7 @@
   
         <!-- Get Started Button -->
         <button
+          @click="navigateToSignUp"
           class="btn-start bg-blue-600 text-white py-3 px-6 rounded-md mt-6 hover:bg-blue-500 transition-colors"
         >
           Get Started
@@ -70,8 +73,6 @@
     data() {
       return {
         isAuthenticated: false, // Replace this with your actual authentication state
-        canLogin: true, // Set to true to display login/register links
-        canRegister: true, // Set to true to display the register link
         features: [
           {
             title: 'Record Lectures & Take Live Notes',
@@ -105,6 +106,14 @@
       checkAuthentication() {
         // Here you could add real authentication checks, e.g., checking a token, calling an API, etc.
         return false; // Set this to true if the user is authenticated
+      },
+      navigateToSignUp() {
+        // Using Laravel's URL helper to navigate to the sign-up page
+        window.location.href = this.route('register');
+      },
+      route(name) {
+        // Laravel routes URL generation for Vue components
+        return `/${name}`;
       },
     },
   };
