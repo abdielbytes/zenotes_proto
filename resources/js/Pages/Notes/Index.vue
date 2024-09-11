@@ -4,7 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm, Head } from '@inertiajs/vue3';
 
 const form = useForm({
-    message: '',
+    note: '',
 });
 </script>
 
@@ -16,7 +16,7 @@ const form = useForm({
             <form @submit.prevent="form.post(route('notes.store'), { onSuccess: () => form.reset() })">
                 <div class="relative">
                     <textarea
-                        v-model="form.message"
+                        v-model="form.note"
                         placeholder="Your note goes here"
                         class="block w-[21cm] h-[29.7cm] border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm resize-none overflow-auto"
                         style="min-width: 21cm; min-height: 29.7cm;"
