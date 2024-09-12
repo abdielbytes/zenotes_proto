@@ -24,6 +24,9 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::get('/notes/create', function () {
+    return Inertia::render('Notes/Create');
+})->name('notes.create');
 
 Route::resource('notes', NoteController::class)
     ->only(['index', 'store'])

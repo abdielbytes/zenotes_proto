@@ -10,6 +10,13 @@ class Note extends Model
     use HasFactory;
 
     protected $fillable = [
-        'note'
+        'title',
+        'note',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
