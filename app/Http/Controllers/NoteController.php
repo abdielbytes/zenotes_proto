@@ -16,13 +16,13 @@ class NoteController extends Controller
     {
         // Fetch notes with id and title
         $notes = Note::where('user_id', auth()->id())->get(['id', 'title']);
-        
+
         return Inertia::render('Notes/Index', [
             'notes' => $notes,
         ]);
     }
-    
-    
+
+
 
     /**
      * Store a newly created note in storage.
@@ -43,6 +43,13 @@ class NoteController extends Controller
 
         // Redirect to the notes index page with a success message
         return redirect()->route('notes.index')->with('success', 'Note created successfully.');
+    }
+
+    public function show(Note $note, Request $request)
+    {
+//        request note id
+        dd($request);
+
     }
 
     /**

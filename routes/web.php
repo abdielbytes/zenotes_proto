@@ -29,5 +29,4 @@ Route::get('/notes/create', function () {
 })->name('notes.create');
 
 Route::resource('notes', NoteController::class)
-    ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
