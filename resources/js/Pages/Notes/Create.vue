@@ -10,28 +10,27 @@ const form = useForm({
     note: '',
 });
 
-const recognition = ref(null); // For speech recognition instance
-const recognitionStarted = ref(false); // To track whether recognition is started
-const loaderVisible = ref(false); // Loader visibility
-const error = ref(''); // Error message
-const finalText = ref(''); // Final text for the note
-const interimText = ref(''); // Interim text for ongoing speech
+const recognition = ref(null);
+const recognitionStarted = ref(false);
+const loaderVisible = ref(false);
+const error = ref('');
+const finalText = ref('');
+const interimText = ref('');
 
 const handleRecognitionResult = (e) => {
-    interimText.value = ''; // Reset interim text on each result event
+    interimText.value = '';
     Array.from(e.results).forEach((result) => {
         if (result.isFinal) {
             finalText.value += result[0].transcript;
-            console.log('Final transcript:', finalText.value); // Log final transcription
+            console.log('Final transcript:', finalText.value);
         } else {
             interimText.value += result[0].transcript;
-            console.log('Interim transcript:', interimText.value); // Log interim transcription
+            console.log('Interim transcript:', interimText.value);
         }
     });
 
-    // Update the form note with the final text
     form.note = finalText.value;
-    finalText.value = ''; // Reset final text for next speech input
+    finalText.value = '';
 
 };
 
@@ -50,7 +49,7 @@ const stopRecognition = () => {
         recognition.value.stop();
         recognitionStarted.value = false;
         loaderVisible.value = false;
-        console.log('Speech recognition stopped'); // Log stop event
+        console.log('Speech recognition stopped');
     }
 };
 
@@ -68,19 +67,19 @@ onMounted(() => {
 
         recognition.value.addEventListener('end', () => {
             if (recognition.value.continuous && recognitionStarted.value) {
-                recognition.value.start(); // Restart recognition if stopped
+                recognition.value.start();
             }
         });
 
         recognition.value.addEventListener('error', (e) => {
             error.value = 'Speech recognition error: ' + e.error;
-            console.error('Speech recognition error:', e.error); // Log the error to console
+            console.error('Speech recognition error:', e.error);
             recognitionStarted.value = false;
             loaderVisible.value = false;
         });
     } else {
         error.value = 'SpeechRecognition not supported by this browser.';
-        console.error('SpeechRecognition not supported by this browser.'); // Log unsupported error
+        console.error('SpeechRecognition not supported by this browser.'); 
     }
 });
 </script>
