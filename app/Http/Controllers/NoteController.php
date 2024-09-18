@@ -22,7 +22,11 @@ class NoteController extends Controller
         ]);
     }
 
+    public function create(): Response
+    {
 
+        return Inertia::render('Notes/Create');
+    }
 
     /**
      * Store a newly created note in storage.
@@ -45,10 +49,10 @@ class NoteController extends Controller
         return redirect()->route('notes.index')->with('success', 'Note created successfully.');
     }
 
-    public function show(Note $note, Request $request)
+    public function show(Note $note)
     {
 //        request note id
-        dd($request);
+        dd($note);
 
     }
 
